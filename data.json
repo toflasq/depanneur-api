@@ -1,0 +1,28 @@
+[
+  {
+    "category": "Électroménager",
+    "device": "Lave-vaisselle",
+    "scenario": "Ne vidange pas",
+    "safety": ["Couper l’alimentation (disjoncteur) et l’arrivée d’eau.","Prévoir serpillière/écuelle; risque d’eau stagnante.","Gants; arêtes vives sous la plinthe.","Ne pas faire tourner à vide pompe démontée."],
+    "tools": ["Tournevis cruciforme/plat","Pince multiprise","Seau et seringue/pompe manuelle (wet/dry ‘shop vac’ si possible)","Lampe","Multimètre (ohmmètre/continuité)","Brosse à dents, chiffon microfibre"],
+    "quick_checks": ["Nettoyer filtre et cuve (sump) + retirer débris autour de l’hélice de vidange.","Vérifier que le tuyau de vidange n’est pas pincé, ni trop bas (siphonnage) ni trop haut (> 1 m).","Déboucher le raccord sur siphon/bonde (souvent un opercule oublié après installation).","Tester un cycle ‘Vidange’ seul : écouter si la pompe tourne (bourdonnement) et si l’eau s’évacue."],
+    "diagnostic_flow": [ { "step": 1,"action": "Accéder au fond de cuve, retirer filtres.","test": "Hélice libre ?","pass": "Aller étape 2.","fail": "Retirer corps étrangers; relancer vidange." },{ "step": 2,"action": "Déconnecter le tuyau côté siphon et souffler/rincer.","test": "Tuyau débouché ?","pass": "Aller étape 3.","fail": "Remplacer ou déboucher le tuyau/ clapet anti-retour." },{ "step": 3,"action": "Mesurer la résistance de la pompe de vidange (débranchée).","test": "Valeur typique 150–300 Ω (230 V).","pass": "Pompe OK → suspecter commande (triac/relai) ou obstruction intermittente.","fail": "Pompe HS → remplacer." },{ "step": 4,"action": "Contrôler pressostat/niveau (tuyau fin vers chambre de compression).","test": "Contact change en soufflant doucement ?","pass": "OK.","fail": "Nettoyer chambre; remplacer pressostat si besoin." } ],
+    "technical_tests": ["Continuité pompe de vidange (hors tension).","Contrôle clapet anti-retour dans le tuyau (doit bouger librement).","Vérifier tension 230 V aux bornes de la pompe pendant ordre de vidange (⚠️ mains expertes uniquement)."],
+    "common_causes": ["Filtre/sump obstrués (verre, noyaux, étiquettes).","Tuyau de vidange bouché ou pincé.","Clapet anti-retour bloqué.","Pompe de vidange encrassée/HS.","Chambre de compression/pressostat encrassés.","Carte électronique (triac/relai) défectueuse."],
+    "fixes": { "basic": ["Nettoyage complet filtre + cuve + hélice.","Rinçage/remplacement du tuyau de vidange.","Nettoyage du raccord de siphon/air gap."], "intermediate": ["Remplacement de la pompe de vidange (joint + colliers neufs).","Nettoyage chambre de compression; remise en place du tuyau pressostat."], "advanced": ["Diagnostic carte; remplacement triac/relai (réservé confirmé·e)."], "parts": ["Pompe de vidange 230 V","Joint de pompe","Tuyau de vidange + colliers","Clapet anti-retour"], "preventive": ["Pré-rincer filtres chaque semaine.","Cycle entretien haute température + produit dégraissant mensuel.","Éviter noyaux/étiquettes en vrac."], "when_to_stop": ["Fuite ou traces de brûlé.","Oxydation avancée connecteurs.","Mesures sous tension si non qualifié·e (stop)."] },
+    "estimates": { "time": { "basic": "15–30 min","intermediate": "45–90 min" }, "cost_ranges_eur": { "parts": "20–60","pro": "90–180" }, "difficulty_1_easy_5_hard": 2 }
+  },
+  {
+    "category": "TV / Audio-Video",
+    "device": "TV LCD/LED (LG ou autre)",
+    "scenario": "Lignes verticales",
+    "safety": ["Débrancher, patienter 5–10 min (décharge).","ESD strap conseillé; nappes fragiles.","Ne pas appuyer fort sur la dalle."],
+    "tools": ["Tournevis (Torx/Cruciforme)","Soufflette/air sec","Chiffon microfibre","Bracelet antistatique"],
+    "quick_checks": ["Tester plusieurs sources (HDMI, tuner, USB).","Vérifier si les lignes apparaissent sur le menu OSD (si oui → panneau/T-Con plus probable).","Remplacer câble HDMI; autre port.","Pression très légère sur le cadre : les lignes bougent ? (COF/panneau suspect)."],
+    "diagnostic_flow": [ { "step": 1,"action": "Isoler source (menu OSD).","test": "Lignes visibles sur OSD ?","pass": "Problème interne TV (T-Con/panneau).","fail": "Source/câble en cause." },{ "step": 2,"action": "Accéder à la carte T-Con; reseat nappes vers la dalle.","test": "Changement ?","pass": "OK; oxydation/connexion.","fail": "Panne T-Con ou dalle (COF)." } ],
+    "common_causes": ["Câble HDMI défectueux.","Carte T-Con en panne.","COF décollé / dalle HS (irréparable économiquement)."],
+    "fixes": { "basic": ["Changer câble/port; mise à jour firmware si disponible."], "intermediate": ["Reseat/ nettoyage nappes LVDS/T-Con."], "advanced": ["Remplacement carte T-Con.","Dalle HS → remplacement TV (not cost-effective)."], "when_to_stop": ["Si pression sur bord change l’affichage → dalle (stop)."] },
+    "estimates": { "time": { "basic": "10–20 min","intermediate": "30–45 min" }, "cost_ranges_eur": { "parts": "40–120 (T-Con)","pro": "120–250" }, "difficulty_1_easy_5_hard": 3 }
+  }
+  /* …Tu continues en ajoutant tous les autres appareils et modules que tu m’as envoyés… */
+]
