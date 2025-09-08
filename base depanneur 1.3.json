@@ -1,0 +1,351 @@
+{
+  "version": "2.0",
+  "updated_at": "2025-08-19",
+  "owner": "Christophe",
+  "title": "Tableau dépanneur — méthodologies complètes enrichies",
+  "units": [
+    { "category": "Électroménager", "device": "Lave-vaisselle", "scenario": "Ne vidange pas", "safety": ["Couper l’alimentation (disjoncteur) et l’arrivée d’eau.","Prévoir serpillière/écuelle; risque d’eau stagnante.","Gants; arêtes vives sous la plinthe.","Ne pas faire tourner à vide pompe démontée."], "tools": ["Tournevis cruciforme/plat","Pince multiprise","Seau et seringue/pompe manuelle (wet/dry ‘shop vac’ si possible)","Lampe","Multimètre (ohmmètre/continuité)","Brosse à dents, chiffon microfibre"], "quick_checks": ["Nettoyer filtre et cuve (sump) + retirer débris autour de l’hélice de vidange.","Vérifier que le tuyau de vidange n’est pas pincé, ni trop bas (siphonnage) ni trop haut (> 1 m).","Déboucher le raccord sur siphon/bonde (souvent un opercule oublié après installation).","Tester un cycle ‘Vidange’ seul : écouter si la pompe tourne (bourdonnement) et si l’eau s’évacue."], "diagnostic_flow": [ { "step": 1,"action": "Accéder au fond de cuve, retirer filtres.","test": "Hélice libre ?","pass": "Aller étape 2.","fail": "Retirer corps étrangers; relancer vidange." },{ "step": 2,"action": "Déconnecter le tuyau côté siphon et souffler/rincer.","test": "Tuyau débouché ?","pass": "Aller étape 3.","fail": "Remplacer ou déboucher le tuyau/ clapet anti-retour." },{ "step": 3,"action": "Mesurer la résistance de la pompe de vidange (débranchée).","test": "Valeur typique 150–300 Ω (230 V).","pass": "Pompe OK → suspecter commande (triac/relai) ou obstruction intermittente.","fail": "Pompe HS → remplacer." },{ "step": 4,"action": "Contrôler pressostat/niveau (tuyau fin vers chambre de compression).","test": "Contact change en soufflant doucement ?","pass": "OK.","fail": "Nettoyer chambre; remplacer pressostat si besoin." } ], "technical_tests": ["Continuité pompe de vidange (hors tension).","Contrôle clapet anti-retour dans le tuyau (doit bouger librement).","Vérifier tension 230 V aux bornes de la pompe pendant ordre de vidange (⚠️ mains expertes uniquement)."], "common_causes": ["Filtre/sump obstrués (verre, noyaux, étiquettes).","Tuyau de vidange bouché ou pincé.","Clapet anti-retour bloqué.","Pompe de vidange encrassée/HS.","Chambre de compression/pressostat encrassés.","Carte électronique (triac/relai) défectueuse."], "fixes": { "basic": ["Nettoyage complet filtre + cuve + hélice.","Rinçage/remplacement du tuyau de vidange.","Nettoyage du raccord de siphon/air gap."], "intermediate": ["Remplacement de la pompe de vidange (joint + colliers neufs).","Nettoyage chambre de compression; remise en place du tuyau pressostat."], "advanced": ["Diagnostic carte; remplacement triac/relai (réservé confirmé·e)."], "parts": ["Pompe de vidange 230 V","Joint de pompe","Tuyau de vidange + colliers","Clapet anti-retour"], "preventive": ["Pré-rincer filtres chaque semaine.","Cycle entretien haute température + produit dégraissant mensuel.","Éviter noyaux/étiquettes en vrac."], "when_to_stop": ["Fuite ou traces de brûlé.","Oxydation avancée connecteurs.","Mesures sous tension si non qualifié·e (stop)."] }, "estimates": { "time": { "basic": "15–30 min","intermediate": "45–90 min" }, "cost_ranges_eur": { "parts": "20–60","pro": "90–180" }, "difficulty_1_easy_5_hard": 2 } },
+    { "category": "TV / Audio-Video", "device": "TV LCD/LED (LG ou autre)", "scenario": "Lignes verticales", "safety": ["Débrancher, patienter 5–10 min (décharge).","ESD strap conseillé; nappes fragiles.","Ne pas appuyer fort sur la dalle."], "tools": ["Tournevis (Torx/Cruciforme)","Soufflette/air sec","Chiffon microfibre","Bracelet antistatique"], "quick_checks": ["Tester plusieurs sources (HDMI, tuner, USB).","Vérifier si les lignes apparaissent sur le menu OSD (si oui → panneau/T-Con plus probable).","Remplacer câble HDMI; autre port.","Pression très légère sur le cadre : les lignes bougent ? (COF/panneau suspect)."], "diagnostic_flow": [ { "step": 1,"action": "Isoler source (menu OSD).","test": "Lignes visibles sur OSD ?","pass": "Problème interne TV (T-Con/panneau).","fail": "Source/câble en cause." },{ "step": 2,"action": "Accéder à la carte T-Con; reseat nappes vers la dalle.","test": "Changement ?","pass": "OK; oxydation/connexion.","fail": "Panne T-Con ou dalle (COF)." } ], "common_causes": ["Câble HDMI défectueux.","Carte T-Con en panne.","COF décollé / dalle HS (irréparable économiquement)."], "fixes": { "basic": ["Changer câble/port; mise à jour firmware si disponible."], "intermediate": ["Reseat/ nettoyage nappes LVDS/T-Con."], "advanced": ["Remplacement carte T-Con.","Dalle HS → remplacement TV (not cost-effective)."], "when_to_stop": ["Si pression sur bord change l’affichage → dalle (stop)."] }, "estimates": { "time": { "basic": "10–20 min","intermediate": "30–45 min" }, "cost_ranges_eur": { "parts": "40–120 (T-Con)","pro": "120–250" }, "difficulty_1_easy_5_hard": 3 } },
+    { "category": "Électroménager", "device": "Micro-ondes", "scenario": "Ne chauffe plus", "safety": ["⚠️ Haute tension DANGEREUSE (≈2–4 kV).","Ne pas ouvrir ni intervenir sur magnétron/capacités/diode HV si non qualifié·e.","Toujours débrancher; laisser reposer."], "tools": ["Prise testée, autre multiprise","Tasse d’eau (test de chauffe)"], "quick_checks": ["Lampe + plateau + ventilateur tournent-ils ?","Tester autre prise/circuit (disjoncteur différentiel).","Essayer par paliers (30 s, 60 s) avec eau."], "common_causes": ["Microswitch(es) de porte défectueux.","Fusible interne grillé (cause à identifier).","Chaîne haute tension: diode/capacité/magnétron/transformateur.","Relais de puissance sur carte."], "fixes": { "basic": ["Changer de prise; vérifier que la porte ferme correctement; nettoyer crochets.","Si rien ne fonctionne (même lampe), pro conseillé."], "advanced": ["Diagnostic/ réparation interne HV par professionnel uniquement."], "when_to_stop": ["Odeur de brûlé, bourdonnement anormal, traces d’arc électrique.","Aucune connaissance HT (stop)."] }, "estimates": { "time": { "basic": "5–10 min" }, "cost_ranges_eur": { "pro": "60–180 selon panne; magnétron 120–220" }, "difficulty_1_easy_5_hard": 5 } },
+    { "category": "Informatique", "device": "PC de bureau", "scenario": "Ventilos tournent, écran noir", "safety": ["Couper l’alim et débrancher avant d’ouvrir.","Décharger (bouton power 15 s).","ESD strap recommandé."], "tools": ["Écran/câble vidéo de test","Tournevis","Pâte thermique (si CPU démonté)","Haut-parleur ‘beep’ (si carte mère)","Multimètre (optionnel)"], "quick_checks": ["Vérifier écran (source/HDMI/DP), luminosité, autre câble.","Débrancher tout sauf CPU + 1 barrette RAM + GPU (si pas d’iGPU) + alim.","Reseat RAM (un seul slot), GPU, connecteurs ATX 24-broches et CPU 8-broches.","Clear CMOS (jumper ou retrait pile 5 min).","Tester sans GPU dédié avec iGPU si possible."], "diagnostic_flow": [ { "step": 1,"action": "Boot minimal.","test": "Bips ou LEDs diagnostic ?","pass": "Suivre code : RAM/CPU/GPU.","fail": "Suspect PSU/CM." },{ "step": 2,"action": "Tester autre PSU (ou paperclip test + mesure 12V/5V).","test": "Tensions OK sous charge ?","pass": "PSU OK → carte mère/CPU/GPU.","fail": "Remplacer PSU." } ], "common_causes": ["RAM mal insérée ou défectueuse.","Alimentation insuffisante/HS.","GPU défaillant ou câble vidéo.","BIOS corrompu / mauvaise config XMP.","Carte mère HS."], "fixes": { "basic": ["Reseat RAM/GPU; clear CMOS; tester autre câble/écran."], "intermediate": ["Mettre à jour BIOS; tester autre PSU; booter sur iGPU."], "advanced": ["Remplacer composant fautif (CM/CPU/GPU/RAM) après isolement."], "when_to_stop": ["Odeur de brûlé, court-circuit, corrosion étendue."] }, "estimates": { "time": { "basic": "20–40 min","intermediate": "45–90 min" }, "cost_ranges_eur": { "parts": "0–300 selon pièce","pro": "80–200" }, "difficulty_1_easy_5_hard": 3 } },
+    { "category": "Téléphonie", "device": "Smartphone", "scenario": "Ne charge plus", "safety": ["Gonflement batterie = danger → arrêter immédiatement.","Éviter objets métalliques pour nettoyer le port (utiliser cure-dent bois)."], "tools": ["Autre câble USB-C/Lightning certifié","Autre chargeur (5 V 2 A et/ou PD)","Brosse douce / cure-dent bois","Testeur USB (voltage/ampèremètre) — optionnel","Chargeur sans-fil (si dispo) pour isoler panne port"], "quick_checks": ["Essayer 2 câbles + 2 chargeurs différents.","Nettoyer délicatement le port (peluches).","Mode avion 10 min puis retester; redémarrage.","Tester charge sans-fil: si OK → port/nappe suspect.","Vérifier détection humidité (message) → laisser sécher 24 h."], "diagnostic_flow": [ { "step": 1,"action": "Test charge 5 V simple.","test": "Courant > 0,5 A sur testeur ?","pass": "OK (charge lente).","fail": "Port/nappe/batterie." },{ "step": 2,"action": "Observer angle/jeu du connecteur.","test": "Contact intermittent en bougeant le câble ?","pass": "Nappe port à remplacer.","fail": "Suspect batterie/carte mère." } ], "common_causes": ["Peluches/oxydation dans le port.","Câble/chargeur HS.","Nappe port de charge défectueuse.","Batterie usée (haut cycle).","Gestion PMIC/carte mère HS."], "fixes": { "basic": ["Nettoyage port + remplacement câble/chargeur.","Mise à jour système; redémarrage."], "intermediate": ["Remplacement nappe port de charge.","Remplacement batterie."], "advanced": ["Réparation carte mère/PMIC (microsoudure)."], "when_to_stop": ["Batterie gonflée, odeur chimique, chauffe anormale."], "preventive": ["Éviter humidité; ne pas tirer sur le câble; nettoyer périodiquement."] }, "estimates": { "time": { "basic": "5–15 min","intermediate": "30–90 min" }, "cost_ranges_eur": { "parts": "10–60 (nappe/batterie)","pro": "50–150" }, "difficulty_1_easy_5_hard": 2 } },
+    { "category": "Électroménager", "device": "Four électrique", "scenario": "Disjoncte au différentiel après stockage", "safety": ["Débrancher; attention surfaces coupantes.","Test d’isolement à réserver aux outillé·es (mégohmmètre)."], "tools": ["Multimètre","Mégohmmètre (500–1000 V DC) — pro","Tournevis","Sèche-cheveux (séchage doux)"], "quick_checks": ["Laisser sécher 24–48 h (porte ouverte).","Chauffer à basse température 50–80 °C 30 min sous surveillance.","Retirer et inspecter résistances (sole, voûte, circulaire) et connectiques."], "diagnostic_flow": [ { "step": 1,"action": "Mesure résistance-terre de chaque élément (déconnecté).","test": "≥ 10 MΩ ?","pass": "Éléments OK → chercher fuite ailleurs.","fail": "Élément à remplacer (fuite à la masse)." },{ "step": 2,"action": "Inspecter lampe/porte, ventilateurs, bornier.","test": "Traces noires/oxydation ?","pass": "Nettoyer/remplacer pièce.","fail": "OK → carte/thermostat." } ], "common_causes": ["Humidité dans les résistances.","Résistance percée (fuite à la masse).","Douille de lampe fissurée/oxydée.","Câblage/borne desserrée."], "fixes": { "basic": ["Séchage prolongé + remise en chauffe douce."], "intermediate": ["Remplacement résistance fautive.","Remplacement douille lampe; resserrage bornier."], "advanced": ["Diagnostic carte/thermostats."], "when_to_stop": ["Déclenchements répétés instantanés; odeur de brûlé."] }, "estimates": { "time": { "basic": "30–120 min (séchage hors temps)","intermediate": "45–90 min" }, "cost_ranges_eur": { "parts": "20–80 (résistance)","pro": "90–200" }, "difficulty_1_easy_5_hard": 3 } },
+    { "category": "Électroménager", "device": "Aspirateur (traineau/balai)", "scenario": "Perte d’aspiration / s’arrête", "safety": ["Débrancher; attention aux pales/moteur.","Éviter d’aspirer eau avec modèle sec (dry only)."], "tools": ["Ciseaux/cutter (cheveux sur brosse)","Tournevis","Filtres neufs","Courroie de rechange (si brosse moteur)"], "quick_checks": ["Vider sac/réservoir; nettoyer filtres (pré-moteur/HEPA).","Déboucher tuyau/embout.","Vérifier courroie de brosse."], "common_causes": ["Filtres saturés.","Tuyau/embout bouché.","Courroie cassée.","Moteur/charbons usés; variateur."], "fixes": { "basic": ["Nettoyage/remplacement filtres; débouchage complet."], "intermediate": ["Remplacement courroie; charbons moteur."], "advanced": ["Remplacement moteur ou variateur."], "preventive": ["Changer/ laver filtres selon notice; ne pas aspirer plâtre fin sans sac adapté."] }, "estimates": { "time": { "basic": "10–20 min","intermediate": "30–60 min" }, "cost_ranges_eur": { "parts": "5–40","pro": "50–120" }, "difficulty_1_easy_5_hard": 2 } },
+    { "category": "Petit électro", "device": "Fer à repasser", "scenario": "Ne chauffe pas / crache", "safety": ["Débrancher; laisser refroidir.","Éviter contact eau/parties électriques."], "tools": ["Multimètre","Tournevis","Détartrant adapté (pas trop acide)","Chiffon microfibre"], "quick_checks": ["Tester autre prise.","Nettoyer semelle; détartrer (programme anti-calc si présent).","Vérifier câble/entretoise (faux-contacts en bougeant)."], "common_causes": ["Thermostat ou fusible thermique HS.","Câble d’alimentation endommagé.","Calcaire obstruant la chambre vapeur."], "fixes": { "basic": ["Détartrage doux selon notice; nettoyage semelle."], "intermediate": ["Remplacement cordon; fusible thermique.","Thermostat (si accessible)."], "advanced": ["Réparation carte (modèles vapeur station) par pro."], "when_to_stop": ["Odeur de brûlé; isolement douteux."] }, "estimates": { "time": { "basic": "15–30 min","intermediate": "30–60 min" }, "cost_ranges_eur": { "parts": "5–25","pro": "40–100" }, "difficulty_1_easy_5_hard": 2 } },
+    { "category": "Audio-Video", "device": "Télécommande IR", "scenario": "Ne répond plus", "safety": ["Respect polarité piles.","Éviter solvants agressifs sur PCB."], "tools": ["Piles neuves","Alcool isopropylique + coton-tiges","Appareil photo smartphone (test IR)","Fer à souder fin (optionnel)"], "quick_checks": ["Changer piles; nettoyer contacts.","Tester LED IR via appareil photo (doit clignoter).","Vérifier oxydation dans le logement piles."], "common_causes": ["Piles usées/oxydées.","LED IR HS.","Clavier à pastilles encrassé.","Soudures fissurées."], "fixes": { "basic": ["Nettoyage logement piles et pastilles caoutchouc.","Remplacement piles."], "intermediate": ["Resouder connecteurs/LED; remplacer LED IR."], "advanced": ["Remplacement PCB (rare)."] }, "estimates": { "time": { "basic": "5–10 min","intermediate": "20–30 min" }, "cost_ranges_eur": { "parts": "1–10","pro": "— (remplacer la télécommande souvent)" }, "difficulty_1_easy_5_hard": 1 } }
+  ]
+}
+[
+  {
+    "category": "Électronique générale",
+    "device": "Carte électronique (SMPS)",
+    "scenario": "Surtension présumée, ne s'allume pas",
+    "safety": [
+      "Toujours débrancher l’appareil avant toute intervention",
+      "Décharger les condensateurs (alimentation)",
+      "Attention aux tensions supérieures à 36V"
+    ],
+    "tools": [
+      "Multimètre (continuité/ohmmètre)",
+      "Tournevis",
+      "Lampe série (remise sous tension sécurisée)",
+      "Loupe/inspection visuelle"
+    ],
+    "quick_checks": [
+      "Inspection visuelle de la zone secteur/fusible",
+      "Test de continuité du fusible secteur"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Débrancher. Ouvrir et inspecter la zone secteur.", "test": "Fusible coupé ?", "pass": "Aller étape 2.", "fail": "Remplacer par même type après correction cause." },
+      { "step": 2, "action": "Rechercher court-circuit primaire (pont de diodes, MOSFET, varistance).", "test": "Court-circuit détecté ?", "pass": "Remédier/remplacer composant fautif.", "fail": "Remise sous tension via lampe série." }
+    ],
+    "common_causes": [
+      "Fusible secteur coupé",
+      "Court-circuit primaire (pont, MOSFET, varistance)"
+    ],
+    "fixes": {
+      "basic": [
+        "Remplacer le fusible par le même type/valeur après correction de la cause"
+      ],
+      "intermediate": [
+        "Remplacer pont de diodes ou MOSFET défectueux",
+        "Remplacer varistance endommagée"
+      ],
+      "parts": [
+        "Fusible secteur (même type)",
+        "Pont de diodes",
+        "MOSFET primaire",
+        "Varistance (MOV)"
+      ]
+    }
+  },
+  {
+    "category": "Électronique générale",
+    "device": "Carte électronique (SMPS)",
+    "scenario": "Surtension présumée, odeur de brûlé",
+    "safety": [
+      "Toujours débrancher l’appareil avant toute intervention",
+      "Décharger les condensateurs (alimentation)",
+      "Attention aux tensions supérieures à 36V"
+    ],
+    "tools": [
+      "Multimètre (ohmmètre)",
+      "Tournevis",
+      "Loupe"
+    ],
+    "quick_checks": [
+      "Inspection visuelle de la varistance (MOV) et de la NTC"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Identifier et déposer la varistance.", "test": "Mesure hors circuit anormale/claquée ?", "pass": "Remplacer par modèle équivalent (tension/énergie).", "fail": "Aller étape 2." },
+      { "step": 2, "action": "Contrôler la NTC et environs secteur.", "test": "NTC ou pistes endommagées ?", "pass": "Remplacer/réparer.", "fail": "Inspection générale de la chaîne primaire." }
+    ],
+    "common_causes": [
+      "Varistance (MOV) claquée",
+      "NTC d’entrée endommagée"
+    ],
+    "fixes": {
+      "basic": [
+        "Remplacer varistance par même tension et énergie"
+      ],
+      "intermediate": [
+        "Remplacer NTC si altérée"
+      ],
+      "parts": [
+        "Varistance (MOV) de même classe",
+        "NTC d’entrée secteur"
+      ]
+    }
+  },
+  {
+    "category": "Électronique générale",
+    "device": "Carte ancienne",
+    "scenario": "Pannes intermittentes",
+    "safety": [
+      "Toujours débrancher l’appareil avant toute intervention",
+      "Attention aux pièces coupantes"
+    ],
+    "tools": [
+      "Loupe",
+      "Fer à souder + flux",
+      "Multimètre"
+    ],
+    "quick_checks": [
+      "Tap test léger sur la carte",
+      "Inspection à la loupe des soudures"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Inspecter connecteurs et composants de puissance.", "test": "Soudures fissurées ?", "pass": "Reprise des soudures.", "fail": "Aller étape 2." },
+      { "step": 2, "action": "Mesurer chutes de tension sur pastilles douteuses.", "test": "Chute anormale ?", "pass": "Reprise des soudures.", "fail": "Contrôles complémentaires." }
+    ],
+    "common_causes": [
+      "Soudures sèches/fissurées",
+      "Connexions oxydées"
+    ],
+    "fixes": {
+      "basic": [
+        "Reprise de soudures avec flux sur zones critiques"
+      ],
+      "intermediate": [
+        "Nettoyage/resserrage des connecteurs"
+      ],
+      "parts": []
+    }
+  },
+  {
+    "category": "Audio",
+    "device": "Ampli (BJT)",
+    "scenario": "Son saturé",
+    "safety": [
+      "Toujours débrancher avant intervention",
+      "Attention aux tensions >36 V (rails d’amplis)"
+    ],
+    "tools": [
+      "Multimètre (DC offset, rails ±V)",
+      "Testeur HFE/transistor",
+      "Tournevis"
+    ],
+    "quick_checks": [
+      "Mesurer l’offset continu en sortie",
+      "Vérifier les rails d’alimentation ±V"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Mesurer DC offset en sortie.", "test": "Offset anormal ?", "pass": "Contrôler transistors/bias.", "fail": "Aller étape 2." },
+      { "step": 2, "action": "Tester HFE et résistances d’émetteur.", "test": "HFE erroné ou résistance hors tolérance ?", "pass": "Remplacer composant(s) et régler bias.", "fail": "Vérifier étage précédent et alimentation." }
+    ],
+    "common_causes": [
+      "Transistor(s) de puissance ou drivers dégradés",
+      "Réglage de bias incorrect",
+      "Résistances d’émetteur dérivées"
+    ],
+    "fixes": {
+      "intermediate": [
+        "Remplacer transistor(s) défectueux",
+        "Régler le bias selon procédure constructeur"
+      ],
+      "parts": [
+        "Transistors de puissance/drivers",
+        "Résistances d’émetteur"
+      ]
+    }
+  },
+  {
+    "category": "Audio",
+    "device": "Ampli (tous)",
+    "scenario": "Son saturé à faible volume",
+    "safety": [
+      "Toujours débrancher avant intervention",
+      "Attention aux tensions >36 V (rails d’amplis)"
+    ],
+    "tools": [
+      "Multimètre",
+      "Testeur ESR (condensateurs)",
+      "Tournevis"
+    ],
+    "quick_checks": [
+      "Écouter bourdonnement 50/100 Hz",
+      "Vérifier visuellement les condensateurs de filtrage"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Mesurer l’ondulation (ripple) sur les rails (selon outillage).", "test": "Ripple élevé ?", "pass": "Condos filtrage suspects.", "fail": "Aller étape 2." },
+      { "step": 2, "action": "Tester l’ESR des électrolytiques.", "test": "ESR élevée ?", "pass": "Remplacer condensateurs de filtrage.", "fail": "Contrôler redressement et liaisons." }
+    ],
+    "common_causes": [
+      "Condensateurs de filtrage secs/fatigues",
+      "Redressement défectueux"
+    ],
+    "fixes": {
+      "intermediate": [
+        "Remplacement des condensateurs de filtrage par low-ESR 105°C"
+      ],
+      "parts": [
+        "Condensateurs électrolytiques de filtrage"
+      ]
+    }
+  },
+  {
+    "category": "Électroménager",
+    "device": "Lave-linge",
+    "scenario": "Ne s'allume pas",
+    "safety": [
+      "Couper l’alimentation (disjoncteur)",
+      "Attention aux pièces coupantes"
+    ],
+    "tools": [
+      "Multimètre (continuité)",
+      "Tournevis"
+    ],
+    "quick_checks": [
+      "Vérifier prise et disjoncteur",
+      "Tester continuité cordon et filtre EMI"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Tester cordon secteur et filtre antiparasite (EMI).", "test": "Continuité OK ?", "pass": "Aller étape 2.", "fail": "Remplacer l’élément défectueux." },
+      { "step": 2, "action": "Contrôler sécurité/verrou de porte.", "test": "Contact OK ?", "pass": "Chercher panne en amont (carte).", "fail": "Remplacer verrou porte." }
+    ],
+    "common_causes": [
+      "Filtre antiparasite (EMI) HS",
+      "Cordon secteur défectueux",
+      "Sécurité/verrou de porte HS"
+    ],
+    "fixes": {
+      "basic": [
+        "Remplacer filtre EMI ou cordon secteur",
+        "Remplacer verrou de porte"
+      ],
+      "parts": [
+        "Filtre EMI",
+        "Cordon secteur",
+        "Verrou/sécurité de porte"
+      ]
+    }
+  },
+  {
+    "category": "Électroménager",
+    "device": "Réfrigérateur",
+    "scenario": "Ne refroidit plus",
+    "safety": [
+      "Débrancher avant intervention",
+      "Attention aux pales de ventilateur"
+    ],
+    "tools": [
+      "Multimètre",
+      "Tournevis"
+    ],
+    "quick_checks": [
+      "Écouter le ventilateur évaporateur",
+      "Dégivrer si givre important"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Accéder au ventilateur évaporateur.", "test": "Ventilateur bloqué ou non alimenté ?", "pass": "Remplacer le ventilateur.", "fail": "Aller étape 2." },
+      { "step": 2, "action": "Vérifier alimentation du ventilateur.", "test": "Tension présente ?", "pass": "Ventilateur HS → remplacer.", "fail": "Contrôler commande/dégivrage." }
+    ],
+    "common_causes": [
+      "Ventilateur évaporateur bloqué/HS",
+      "Problème de dégivrage"
+    ],
+    "fixes": {
+      "basic": [
+        "Dégivrer et libérer la turbine"
+      ],
+      "intermediate": [
+        "Remplacer le ventilateur évaporateur"
+      ],
+      "parts": [
+        "Ventilateur évaporateur"
+      ]
+    }
+  },
+  {
+    "category": "Électroménager",
+    "device": "Four encastrable",
+    "scenario": "Ne chauffe pas",
+    "safety": [
+      "Débrancher avant intervention",
+      "Attention aux surfaces coupantes et bornier secteur"
+    ],
+    "tools": [
+      "Multimètre (continuité)",
+      "Tournevis"
+    ],
+    "quick_checks": [
+      "Tester continuité des résistances (sole/voûte/circulaire)",
+      "Vérifier relais de carte si présent"
+    ],
+    "diagnostic_flow": [
+      { "step": 1, "action": "Mesurer continuité des éléments chauffants.", "test": "Élément coupé ?", "pass": "Remplacer l’élément.", "fail": "Aller étape 2." },
+      { "step": 2, "action": "Contrôler relais de puissance sur la carte.", "test": "Relais défectueux (contact/commande) ?", "pass": "Remplacer relais/réparer carte.", "fail": "Vérifier sonde et thermostats." }
+    ],
+    "common_causes": [
+      "Résistance chauffante grillée",
+      "Relais de carte défectueux",
+      "Sonde/thermostat en cause (moins fréquent)"
+    ],
+    "fixes": {
+      "basic": [
+        "Remplacer la résistance HS"
+      ],
+      "intermediate": [
+        "Remplacer relais de carte ou réparer la carte"
+      ],
+      "parts": [
+        "Résistance chauffante (sole/voûte/circulaire)",
+        "Relais de puissance",
+        "Sonde/thermostat"
+      ]
+    }
+  }
+]
+
+{
+  "module": "dépannage GPT",
+  "version": "V1.3",
+  "description": "Module de dépannage pour contrôle des composants électroniques passifs et CMS.",
+  "fonctions": [
+    {
+      "nom": "Contrôle composants passifs",
+      "description": "Méthode de contrôle des résistances et condensateurs à partir de leurs inscriptions.",
+      "details": {
+        "résistances": {
+          "lecture_inscription": true,
+          "code_couleur": true,
+          "remarque": "Permet de vérifier la valeur nominale sans multimètre."
+        },
+        "condensateurs": {
+          "lecture_inscription": true,
+          "remarque": "Contrôle des condensateurs chimiques et céramiques."
+        },
+        "CMS": {
+          "résistances": {
+            "lecture_code_couleur": true,
+            "remarque": "Lecture possible grâce au code standardisé des composants CMS."
+          },
+          "condensateurs": {
+            "lecture_inscription": true,
+            "remarque": "Identification des condensateurs CMS par leur marquage."
+          }
+        }
+      }
+    }
+  ]
+}
