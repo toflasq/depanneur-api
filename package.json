@@ -1,0 +1,109 @@
+[
+  {
+    "version": "2.0",
+    "updated_at": "2025-08-19",
+    "owner": "Christophe",
+    "title": "Tableau dépanneur — méthodologies complètes enrichies",
+    "units": [
+      {
+        "category": "Électroménager",
+        "device": "Lave-vaisselle",
+        "scenario": "Ne vidange pas",
+        "safety": [
+          "Couper l’alimentation (disjoncteur) et l’arrivée d’eau.",
+          "Prévoir serpillière/écuelle; risque d’eau stagnante.",
+          "Gants; arêtes vives sous la plinthe.",
+          "Ne pas faire tourner à vide pompe démontée."
+        ],
+        "tools": [
+          "Tournevis cruciforme/plat",
+          "Pince multiprise",
+          "Seau et seringue/pompe manuelle (wet/dry ‘shop vac’ si possible)",
+          "Lampe",
+          "Multimètre (ohmmètre/continuité)",
+          "Brosse à dents, chiffon microfibre"
+        ],
+        "quick_checks": [
+          "Nettoyer filtre et cuve (sump) + retirer débris autour de l’hélice de vidange.",
+          "Vérifier que le tuyau de vidange n’est pas pincé, ni trop bas (siphonnage) ni trop haut (> 1 m).",
+          "Déboucher le raccord sur siphon/bonde (souvent un opercule oublié après installation).",
+          "Tester un cycle ‘Vidange’ seul : écouter si la pompe tourne (bourdonnement) et si l’eau s’évacue."
+        ]
+      },
+      {
+        "category": "TV / Audio-Video",
+        "device": "TV LCD/LED (LG ou autre)",
+        "scenario": "Lignes verticales",
+        "safety": [
+          "Débrancher, patienter 5–10 min (décharge).",
+          "ESD strap conseillé; nappes fragiles.",
+          "Ne pas appuyer fort sur la dalle."
+        ],
+        "tools": [
+          "Tournevis (Torx/Cruciforme)",
+          "Soufflette/air sec",
+          "Chiffon microfibre",
+          "Bracelet antistatique"
+        ],
+        "quick_checks": [
+          "Tester plusieurs sources (HDMI, tuner, USB).",
+          "Vérifier si les lignes apparaissent sur le menu OSD (si oui → panneau/T-Con plus probable).",
+          "Remplacer câble HDMI; autre port.",
+          "Pression très légère sur le cadre : les lignes bougent ? (COF/panneau suspect)."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Électronique générale",
+    "device": "Carte électronique (SMPS)",
+    "scenario": "Surtension présumée, ne s'allume pas",
+    "safety": [
+      "Toujours débrancher l’appareil avant toute intervention",
+      "Décharger les condensateurs (alimentation)",
+      "Attention aux tensions supérieures à 36V"
+    ],
+    "tools": [
+      "Multimètre (continuité/ohmmètre)",
+      "Tournevis",
+      "Lampe série (remise sous tension sécurisée)",
+      "Loupe/inspection visuelle"
+    ],
+    "quick_checks": [
+      "Inspection visuelle de la zone secteur/fusible",
+      "Test de continuité du fusible secteur"
+    ]
+  },
+  {
+    "module": "dépannage GPT",
+    "version": "V1.3",
+    "description": "Module de dépannage pour contrôle des composants électroniques passifs et CMS.",
+    "fonctions": [
+      {
+        "nom": "Contrôle composants passifs",
+        "description": "Méthode de contrôle des résistances et condensateurs à partir de leurs inscriptions.",
+        "details": {
+          "résistances": {
+            "lecture_inscription": true,
+            "code_couleur": true,
+            "remarque": "Permet de vérifier la valeur nominale sans multimètre."
+          },
+          "condensateurs": {
+            "lecture_inscription": true,
+            "remarque": "Contrôle des condensateurs chimiques et céramiques."
+          },
+          "CMS": {
+            "résistances": {
+              "lecture_code_couleur": true,
+              "remarque": "Lecture possible grâce au code standardisé des composants CMS."
+            },
+            "condensateurs": {
+              "lecture_inscription": true,
+              "remarque": "Identification des condensateurs CMS par leur marquage."
+            }
+          }
+        }
+      }
+    ]
+  }
+]
