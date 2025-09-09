@@ -1,0 +1,37 @@
+{
+  "units": [],
+  "modules": [
+    {
+      "module": "dépannage GPT",
+      "version": "V1.3",
+      "description": "Module de dépannage pour contrôle des composants électroniques passifs et CMS.",
+      "fonctions": [
+        {
+          "nom": "Contrôle composants passifs",
+          "description": "Méthode de contrôle des résistances et condensateurs à partir de leurs inscriptions.",
+          "details": {
+            "résistances": {
+              "lecture_inscription": true,
+              "code_couleur": true,
+              "remarque": "Permet de vérifier la valeur nominale sans multimètre."
+            },
+            "condensateurs": {
+              "lecture_inscription": true,
+              "remarque": "Contrôle des condensateurs chimiques et céramiques."
+            },
+            "CMS": {
+              "résistances": {
+                "lecture_code_couleur": true,
+                "remarque": "Lecture possible grâce au code standardisé des composants CMS."
+              },
+              "condensateurs": {
+                "lecture_inscription": true,
+                "remarque": "Identification des condensateurs CMS par leur marquage."
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
