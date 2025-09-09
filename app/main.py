@@ -1,3 +1,19 @@
+
+import json
+from pathlib import Path
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# chemin vers ton fichier
+DATA_PATH = Path(__file__).parent / "data" / "data.json"
+
+with open(DATA_PATH, "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+@app.get("/data")
+def get_data():
+    return data
 import os, json
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, HTMLResponse
