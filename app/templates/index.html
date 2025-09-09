@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dépanneur — Chat</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Dépanneur</h1>
+    <div id="chat" class="chatbox"></div>
+
+    <form id="form" onsubmit="return false;">
+      <input id="q" autocomplete="off" placeholder="Pose ta question (ex: 'lave-vaisselle ne vidange pas')" />
+      <button id="send">Envoyer</button>
+    </form>
+
+    <footer class="footer">Minimal chat UI • ready for Render</footer>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
