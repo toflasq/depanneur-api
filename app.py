@@ -52,6 +52,21 @@ def search_by_id():
     result = [item for item in data if item.get("id") == id_int]
     return jsonify(result)
 
+from flask import render_template, request, jsonify
+
+# Route  pour  le chat
+@app.route("/chat")
+def chat():
+    user_msg = request.args.get("message")
+    # Pour l'instant, on fait un écho simple
+    reply = f"Tu as dit : {user_msg}"
+    return jsonify({"reply": reply})
+
+@app.route("/chatpage")
+def chatpage():
+    return render_template("chat.html")
+
+
 
 
 if __name__ == "__main__":
