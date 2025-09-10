@@ -1,4 +1,2 @@
-Flask==2.2.5
-Flask-SQLAlchemy==3.0.0
-gunicorn==23.0.0
-pip install flask-cors
+Flask==2.3.3
+flask-cors==4.0.0
