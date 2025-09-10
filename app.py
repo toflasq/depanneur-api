@@ -16,6 +16,18 @@ def index():
 @app.route("/items")
 def get_items():
     return jsonify(data)
+from flask import request
+
+# Route pour rechercher les données
+@app.route("/items/search")
+def search_items():
+    categorie = request.args.get("categorie")  # lit ?categorie=X dans l'URL
+    if not categorie:
+        return jsonify({"error": "Veuillez fournir une catégorie"}), 400
+
+    result = [item for item in data if item.get("categorie") == categorie]
+    return jsonify(result)
+
 
 if __name__ == "__main__":
     # Lancer le serveur Flask en local
