@@ -37,6 +37,22 @@ def search_by_name():
     result = [item for item in data if item.get("nom") == nom]
     return jsonify(result)
 
+# Route  pour rechercher les objets par id
+@app.route("/items/id")
+def search_by_id():
+    id_str = request.args.get("id")  # lit ?id=2
+    if not id_str:
+        return jsonify({"error": "Veuillez fournir un id"}), 400
+
+    try:
+        id_int = int(id_str)
+    except ValueError:
+        return jsonify({"error": "ID doit être un nombre"}), 400
+
+    result = [item for item in data if item.get("id") == id_int]
+    return jsonify(result)
+
+
 
 if __name__ == "__main__":
     # Lancer le serveur Flask en local
