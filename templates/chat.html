@@ -28,7 +28,7 @@
             chatbox.innerHTML += `<p><b>Moi :</b> ${msg}</p>`;
 
             // Appel à l'API Flask
-            let response = await fetch(`/chat?message=${encodeURIComponent(msg)}`);
+            let response = await fetch(`https://tonservice.onrender.com/chat?message=${encodeURIComponent(msg)}`);
             let data = await response.json();
 
             chatbox.innerHTML += `<p><b>Bot :</b> ${data.reply}</p>`;
