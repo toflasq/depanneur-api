@@ -27,11 +27,19 @@
             let chatbox = document.getElementById('chatbox');
             chatbox.innerHTML += `<p><b>Moi :</b> ${msg}</p>`;
 
-            // Appel à l'API Flask
-            let response = await fetch(`https://depanneur-api.onrender.com/chat?message=${encodeURIComponent(msg)}`);
-            let data = await response.json();
+            // Remplacez l'URL par celle de votre service Render exact
+            const apiUrl = "https://depanneur-api.onrender.com/chat";
 
-            chatbox.innerHTML += `<p><b>Bot :</b> ${data.reply}</p>`;
+            try {
+                let response = await fetch(`${apiUrl}?message=${encodeURIComponent(msg)}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                let data = await response.json();
+
+                chatbox.innerHTML += `<p><b>Bot :</b> ${data.reply}</p>`;
+            } catch (err) {
+                chatbox.innerHTML += `<p><b>Bot :</b> Erreur : ${err.message}</p>`;
+            }
+
             chatbox.scrollTop = chatbox.scrollHeight;
             document.getElementById('message').value = '';
         }
