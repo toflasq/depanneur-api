@@ -27,6 +27,15 @@ def search_items():
 
     result = [item for item in data if item.get("categorie") == categorie]
     return jsonify(result)
+# Route  pour rechercher les objets
+@app.route("/items/name")
+def search_by_name():
+    nom = request.args.get("nom")  # lit ?nom=Objet A
+    if not nom:
+        return jsonify({"error": "Veuillez fournir un nom"}), 400
+
+    result = [item for item in data if item.get("nom") == nom]
+    return jsonify(result)
 
 
 if __name__ == "__main__":
