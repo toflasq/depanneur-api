@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Dépanneur</title>
+</head>
+<body>
+    <h1>Chat avec votre API / GPT</h1>
+    <div id="chatbox" style="border:1px solid #000; height:300px; overflow:auto;"></div>
+    <input type="text" id="message" placeholder="Tape ton message..."/>
+    <button onclick="sendMessage()">Envoyer</button>
+
+    <script>
+        async function sendMessage() {
+            let msg = document.getElementById('message').value;
+            if(msg === '') return;
+
+            // Affiche le message dans le chat
+            let chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += `<p><b>Moi :</b> ${msg}</p>`;
+
+            // Envoie le message au serveur Flask
+            let response = await fetch(`/chat?message=${encodeURIComponent(msg)}`);
+            let data = await response.json();
+
+            chatbox.innerHTML += `<p><b>Bot :</b> ${data.reply}</p>`;
+            chatbox.scrollTop = chatbox.scrollHeight;
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>
