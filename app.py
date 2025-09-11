@@ -1,70 +1,68 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
+from openai import OpenAI
+import os
 import json
 
 app = Flask(__name__)
-CORS(app)  # Autorise les requêtes depuis n'importe quel domaine (utile pour Render)
+CORS(app)
 
-# Charger ton JSON
+# 🔑 Charge ta clé API OpenAI depuis les variables d'environnement Render
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# 📂 Charger ton JSON
 with open("data.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
-# Route racine
+# ✅ Route racine
 @app.route("/")
 def index():
+    return "Robot Christophe Actif"
+
+# ✅ Route pour interface chat web
+@app.route("/chatpage")
+def chatpage():
     return render_template("chat.html")
 
-# Route pour toutes les données
-@app.route("/items")
-def get_items():
-    return jsonify(data)
-
-# Route recherche par catégorie
-@app.route("/items/search")
-def search_items():
-    categorie = request.args.get("categorie")
-    if not categorie:
-        return jsonify({"error": "Veuillez fournir une catégorie"}), 400
-    result = [item for item in data if item.get("categorie") == categorie]
-    return jsonify(result)
-
-# Route recherche par nom
-@app.route("/items/name")
-def search_by_name():
-    nom = request.args.get("nom")
-    if not nom:
-        return jsonify({"error": "Veuillez fournir un nom"}), 400
-    result = [item for item in data if item.get("nom") == nom]
-    return jsonify(result)
-
-# Route recherche par ID
-@app.route("/items/id")
-def search_by_id():
-    id_str = request.args.get("id")
-    if not id_str:
-        return jsonify({"error": "Veuillez fournir un id"}), 400
-    try:
-        id_int = int(id_str)
-    except ValueError:
-        return jsonify({"error": "ID doit être un nombre"}), 400
-    result = [item for item in data if item.get("id") == id_int]
-    return jsonify(result)
-
-# Route chat pour API
+# ✅ Route Chat (fusion Data.json + GPT)
 @app.route("/chat")
 def chat():
     user_msg = request.args.get("message")
     if not user_msg:
         return jsonify({"reply": "Envoyez un message valide."})
-    # Pour l'instant, écho simple
-    reply = f"Tu as dit : {user_msg}"
+
+    # 🔍 Chercher dans data.json
+    results = []
+    for item in data:
+        if user_msg.lower() in str(item.get("nom", "")).lower():
+            results.append(item)
+        elif user_msg.lower() in str(item.get("categorie", "")).lower():
+            results.append(item)
+        elif user_msg.isdigit() and int(user_msg) == item.get("id"):
+            results.append(item)
+
+    # Construit le contexte
+    context = f"L'utilisateur a demandé : {user_msg}\n"
+    if results:
+        context += f"Données trouvées dans data.json : {results}\n"
+    else:
+        context += "Aucune donnée directe trouvée dans data.json.\n"
+
+    # 💬 Appel GPT-4o mini
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Tu es Robot Christophe, un assistant qui combine données JSON et intelligence GPT."},
+                {"role": "user", "content": context}
+            ]
+        )
+        reply = response.choices[0].message.content
+    except Exception as e:
+        reply = f"Erreur GPT: {str(e)}"
+
     return jsonify({"reply": reply})
 
-# Route pour interface web du chat
-@app.route("/chatpage")
-def chatpage():
-    return render_template("chat.html")  # chat.html doit être dans templates/
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-

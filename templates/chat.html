@@ -3,45 +3,104 @@
 <head>
     <title>Chat Dépanneur</title>
     <style>
-        #chatbox {
-            border: 1px solid #000;
-            height: 300px;
-            overflow-y: scroll;
-            padding: 5px;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
-        input { width: 80%; }
-        button { width: 18%; }
+        #chatbox {
+            border: 1px solid #ccc;
+            background: #fff;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .msg-user {
+            text-align: right;
+            color: blue;
+        }
+        .msg-bot {
+            text-align: left;
+            color: green;
+        }
+        input, select {
+            width: 70%;
+            padding: 8px;
+        }
+        button {
+            padding: 8px 15px;
+        }
     </style>
 </head>
 <body>
-    <h1>Chat avec votre API</h1>
+    <h1>Chat Dépanneur</h1>
     <div id="chatbox"></div>
+
+    <!-- Chat normal -->
     <input type="text" id="message" placeholder="Tape ton message..." />
     <button onclick="sendMessage()">Envoyer</button>
 
+    <br><br>
+
+    <!-- Section Data.json -->
+    <h3>Rechercher dans la base de données</h3>
+    <input type="text" id="categorie" placeholder="Catégorie..." />
+    <button onclick="searchCategorie()">Chercher Catégorie</button>
+
+    <input type="text" id="nom" placeholder="Nom..." />
+    <button onclick="searchNom()">Chercher Nom</button>
+
+    <input type="number" id="id" placeholder="ID..." />
+    <button onclick="searchId()">Chercher ID</button>
+
     <script>
+        const apiUrl = "https://depanneur-api.onrender.com";
+
         async function sendMessage() {
             let msg = document.getElementById('message').value;
             if(msg === '') return;
 
             let chatbox = document.getElementById('chatbox');
-            chatbox.innerHTML += `<p><b>Moi :</b> ${msg}</p>`;
+            chatbox.innerHTML += `<p class="msg-user"><b>Moi :</b> ${msg}</p>`;
 
-            // Remplacez l'URL par celle de votre service Render exact
-            const apiUrl = "https://depanneur-api.onrender.com/chat";
+            let response = await fetch(`${apiUrl}/chat?message=${encodeURIComponent(msg)}`);
+            let data = await response.json();
 
-            try {
-                let response = await fetch(`${apiUrl}?message=${encodeURIComponent(msg)}`);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                let data = await response.json();
-
-                chatbox.innerHTML += `<p><b>Bot :</b> ${data.reply}</p>`;
-            } catch (err) {
-                chatbox.innerHTML += `<p><b>Bot :</b> Erreur : ${err.message}</p>`;
-            }
-
+            chatbox.innerHTML += `<p class="msg-bot"><b>Bot :</b> ${data.reply}</p>`;
             chatbox.scrollTop = chatbox.scrollHeight;
             document.getElementById('message').value = '';
+        }
+
+        async function searchCategorie() {
+            let value = document.getElementById('categorie').value;
+            if (!value) return;
+            let res = await fetch(`${apiUrl}/items/search?categorie=${encodeURIComponent(value)}`);
+            let data = await res.json();
+            showData("Résultats catégorie", data);
+        }
+
+        async function searchNom() {
+            let value = document.getElementById('nom').value;
+            if (!value) return;
+            let res = await fetch(`${apiUrl}/items/name?nom=${encodeURIComponent(value)}`);
+            let data = await res.json();
+            showData("Résultats nom", data);
+        }
+
+        async function searchId() {
+            let value = document.getElementById('id').value;
+            if (!value) return;
+            let res = await fetch(`${apiUrl}/items/id?id=${encodeURIComponent(value)}`);
+            let data = await res.json();
+            showData("Résultats ID", data);
+        }
+
+        function showData(title, data) {
+            let chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += `<p class="msg-bot"><b>${title} :</b> ${JSON.stringify(data)}</p>`;
+            chatbox.scrollTop = chatbox.scrollHeight;
         }
     </script>
 </body>
