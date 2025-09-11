@@ -14,11 +14,6 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 with open("data.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
-# ✅ Route racine
-@app.route("/")
-def index():
-    return "Robot Christophe Actif"
-
 # ✅ Route pour interface chat web
 @app.route("/chatpage")
 def chatpage():
@@ -66,3 +61,4 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
