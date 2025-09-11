@@ -22,7 +22,7 @@ def chatpage():
 # ✅ Route Chat (fusion Data.json + GPT)
 @app.route("/chat")
 def chat():
-    user_msg = request.args.get("message")
+   user_msg = request.json.get("message")
     if not user_msg:
         return jsonify({"reply": "Envoyez un message valide."})
 
@@ -61,4 +61,5 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
 
