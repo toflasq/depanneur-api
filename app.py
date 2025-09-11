@@ -12,7 +12,7 @@ with open("data.json", "r", encoding="utf-8") as f:
 # Route racine
 @app.route("/")
 def index():
-    return "Robot Christophe Actif"
+    return render_template("chat.html")
 
 # Route pour toutes les données
 @app.route("/items")
@@ -67,3 +67,4 @@ def chatpage():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
