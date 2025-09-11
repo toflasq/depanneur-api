@@ -9,8 +9,6 @@ CORS(app)
 
 # 🔑 Charge ta clé API OpenAI depuis les variables d'environnement Render
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-if os.getenv("OPENAI_API_KEY") is None:
-    print("⚠️ OPENAI_API_KEY manquante !")
 
 # 📂 Charger ton JSON
 with open("data.json", "r", encoding="utf-8") as f:
@@ -30,22 +28,8 @@ def chatpage():
 @app.route("/chat")
 def chat():
     user_msg = request.args.get("message")
-    context = f"L'utilisateur a demandé : {user_msg}"
-    
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Tu es Robot Christophe, assistant."},
-                {"role": "user", "content": context}
-            ]
-        )
-        reply = response.choices[0].message.content
-    except Exception as e:
-        reply = f"Erreur GPT: {str(e)}"
-    
-    return jsonify({"reply": reply})
-
+    if not user_msg:
+        return jsonify({"reply": "Envoyez un message valide."})
 
     # 🔍 Chercher dans data.json
     results = []
@@ -82,6 +66,3 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-
-
-
