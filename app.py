@@ -28,8 +28,8 @@ def chatpage():
 @app.route("/chat")
 def chat():
     user_msg = request.args.get("message")
-    if not user_msg:
-        return jsonify({"reply": "Envoyez un message valide."})
+    return jsonify({"reply": f"Tu as écrit : {user_msg}"})
+
 
     # 🔍 Chercher dans data.json
     results = []
@@ -66,3 +66,4 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
