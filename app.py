@@ -9,6 +9,8 @@ CORS(app)
 
 # 🔑 Charge ta clé API OpenAI depuis les variables d'environnement Render
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+if os.getenv("OPENAI_API_KEY") is None:
+    print("⚠️ OPENAI_API_KEY manquante !")
 
 # 📂 Charger ton JSON
 with open("data.json", "r", encoding="utf-8") as f:
@@ -66,4 +68,5 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
 
