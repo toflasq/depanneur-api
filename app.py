@@ -14,6 +14,11 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 with open("data.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
+# ✅ Route racine
+@app.route("/")
+def index():
+    return "Robot Christophe Actif"
+
 # ✅ Route pour interface chat web
 @app.route("/chatpage")
 def chatpage():
@@ -22,7 +27,7 @@ def chatpage():
 # ✅ Route Chat (fusion Data.json + GPT)
 @app.route("/chat")
 def chat():
-   user_msg = request.json.get("message")
+    user_msg = request.args.get("message")
     if not user_msg:
         return jsonify({"reply": "Envoyez un message valide."})
 
@@ -61,5 +66,3 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-
-
