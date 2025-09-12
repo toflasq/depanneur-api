@@ -166,8 +166,8 @@
     "device": "TV LCD/LED (LG ou autre)",
     "scenario": "Lignes verticales",
     "safety": 
-      "Débrancher, patienter 5–10 min (décharge)."
-      "ESD , strap conseillé nappes fragiles."
+      "Débrancher, patienter 5–10 min (décharge).",
+      "ESD , strap conseillé nappes fragiles.",
       "Ne pas appuyer fort sur la dalle."
       "tools": [
       "Tournevis (Torx/Cruciforme)",
