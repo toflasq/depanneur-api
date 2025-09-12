@@ -162,7 +162,7 @@
       "cost_ranges_eur": { "parts": "40–120 (T-Con)", "pro": "120–250" }
     }
   }
-]
+],
 [
   {
     "category": "Électroménager",
@@ -368,7 +368,7 @@
       "cost_ranges_eur": { "pro": "60–180 selon panne; magnétron 120–220" }
     }
   }
-]
+],
 [
   {
     "category": "Informatique",
@@ -537,7 +537,7 @@
       "parts": ["Filtre EMI", "Cordon secteur", "Verrou/sécurité de porte"]
     }
   }
-]
+],
 [
   {
     "category": "Électroménager",
