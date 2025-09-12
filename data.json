@@ -108,7 +108,6 @@
       "difficulty_1_easy_5_hard": 2
     }
   },
-  {
     "category": "TV / Audio-Video",
     "device": "TV LCD/LED (LG ou autre)",
     "scenario": "Lignes verticales",
@@ -160,9 +159,6 @@
       "time": { "basic": "10–20 min", "intermediate": "30–45 min" },
       "cost_ranges_eur": { "parts": "40–120 (T-Con)", "pro": "120–250" }
     }
-  }
-],
-[
   {
     "category": "Électroménager",
     "device": "Lave-vaisselle",
