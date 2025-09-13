@@ -415,7 +415,7 @@
         "Remplacer filtre EMI ou cordon secteur",
         "Remplacer verrou de porte"
       ],
-      "parts": ["Filtre EMI", "Cordon secteur", "Verrou/sécurité de porte"
+      "parts": ["Filtre EMI", "Cordon secteur", "Verrou/sécurité de porte",
       {
   },
   {
@@ -670,6 +670,7 @@
     }
   }
 ]
+
 
 
 
