@@ -165,8 +165,6 @@
     "category": "TV / Audio-Video",
     "device": "TV LCD/LED (LG ou autre)",
     "scenario": "Lignes verticales",
-    "safety": 
-      "Débrancher, patienter 5–10 min (décharge).",
       "tools": [
       "Tournevis (Torx/Cruciforme)",
       "Soufflette/air sec",
@@ -415,8 +413,12 @@
         "Remplacer filtre EMI ou cordon secteur",
         "Remplacer verrou de porte"
       ],
-      "parts": ["Filtre EMI", "Cordon secteur", "Verrou/sécurité de porte",
-      {
+      "parts": [
+      "Filtre EMI", 
+      "Cordon secteur",
+      "Verrou/sécurité de porte"
+      ]
+    }
   },
   {
     "category": "Électroménager",
@@ -668,5 +670,5 @@
       "time": { "basic": "5–10 min", "intermediate": "20–30 min" },
       "cost_ranges_eur": { "parts": "1–10", "pro": "— (remplacer la télécommande souvent)" }
     }
-  },  
+  } 
 ]
