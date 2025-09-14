@@ -2,91 +2,94 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Dépanneur</title>
+    <title>Robot Dépanneur Christophe 🐻</title>
     <style>
         html, body {
             height: 100%;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #40E0D0; /* bleu turquoise */
+            font-family: 'SmalleY', sans-serif;
+            background-color: #505050; /* fond gris foncé */
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 80%;
-            width: 400px;
-            max-width: 95%;
-            background: #b9fbc0; /* vert pastel menthe */
+            width: 100%;
+            max-width: 600px;
+            height: 90%;
+            background-color: #505050;
             border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-
+        h1 {
+            text-align: center;
+            color: #e0f7da; /* vert pastel pour le titre */
+            margin: 12px 0;
+            font-size: 1.6em;
+        }
         #chatbox {
             flex: 1;
             padding: 15px;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            overflow-y: auto;
+            background-color: #e0f7da; /* vert pastel menthe pour les bulles */
+            border-radius: 0 0 12px 12px;
         }
-
         .bubble {
             padding: 10px 15px;
-            border-radius: 18px;
+            border-radius: 20px;
             max-width: 75%;
             word-wrap: break-word;
             animation: fadeIn 0.3s forwards;
         }
-
-        @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
-
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
         .user {
             align-self: flex-end;
-            background: #007bff;
+            background-color: #007bff;
             color: #fff;
         }
-
         .bot {
             align-self: flex-start;
-            background: #e0ffe0; /* vert pastel plus clair pour bot */
-            color: #333;
+            background-color: #b8e0c8; /* vert pastel plus clair pour bot */
+            color: #000;
         }
-
         .input-area {
             display: flex;
-            border-top: 1px solid #ccc;
             padding: 10px;
-            background: #b9fbc0;
+            border-top: 1px solid #333;
+            gap: 8px;
+            background-color: #404040; /* zone de saisie un peu plus sombre */
         }
-
         .input-area input {
             flex: 1;
-            padding: 10px 15px;
+            padding: 10px;
             border-radius: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid #333;
+            background-color: #606060;
+            color: #fff;
             font-size: 1em;
-            outline: none;
         }
-
         .input-area button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            border: none;
+            padding: 10px 18px;
             border-radius: 20px;
-            background: #007bff;
+            border: none;
+            background-color: #007bff;
             color: #fff;
             cursor: pointer;
-            font-size: 1em;
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
+        <h1>🐻 Robot Dépanneur Christophe</h1>
         <div id="chatbox"></div>
         <div class="input-area">
             <input type="text" id="message" placeholder="Tape ton message..." />
@@ -95,7 +98,7 @@
     </div>
 
     <script>
-        const apiUrl = "https://depanneur-api.onrender.com/chat"; // POST JSON attendu
+        const apiUrl = "https://depanneur-api.onrender.com/chat";
 
         async function sendMessage() {
             let msgInput = document.getElementById('message');
@@ -107,8 +110,8 @@
 
             try {
                 let response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: msg })
                 });
                 let data = await response.json();
@@ -120,14 +123,14 @@
 
         function appendBubble(text, type) {
             let chatbox = document.getElementById('chatbox');
-            let p = document.createElement('div');
-            p.className = `bubble ${type}`;
-            p.innerHTML = text;
-            chatbox.appendChild(p);
+            let div = document.createElement('div');
+            div.className = 'bubble ' + type;
+            div.textContent = text;
+            chatbox.appendChild(div);
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
-        document.getElementById('message').addEventListener('keypress', function(e) {
+        document.getElementById('message').addEventListener('keypress', function(e){
             if(e.key === 'Enter') sendMessage();
         });
     </script>
