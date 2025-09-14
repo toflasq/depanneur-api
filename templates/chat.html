@@ -1,208 +1,148 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Robot Dépanneur Christophe 🐻</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #505050;
-            color: #fff;
-        }
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            background: #1e1e1e;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        h1 {
-            text-align: center;
-            font-family: 'SmalleY', sans-serif;
-            font-weight: normal;
-            margin: 15px 0;
-            font-size: 1.8em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        #chatbox {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background: #505050;
-        }
-        .bubble {
-            padding: 12px 18px;
-            border-radius: 20px;
-            max-width: 75%;
-            word-wrap: break-word;
-            animation: fadeIn 0.3s forwards;
-        }
-        @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform:translateY(0);} }
-        .user { align-self: flex-end; background: #007bff; color: #fff; }
-        .bot { align-self: flex-start; background: #98ff98; color: #000; }
-        .input-area {
-            display: flex;
-            padding: 12px;
-            gap: 8px;
-            border-top: 1px solid #333;
-            background: #1e1e1e;
-        }
-        .input-area input {
-            flex: 1;
-            padding: 12px;
-            border-radius: 25px;
-            border: 1px solid #333;
-            outline: none;
-            font-size: 1em;
-            background: #2e2e2e;
-            color: #fff;
-        }
-        .input-area button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            background: #007bff;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .tools {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 15px;
-            background: #1e1e1e;
-            border-top: 1px solid #333;
-        }
-        .tool {
-            flex: 1;
-            min-width: 250px;
-            background: #2e2e2e;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 12px;
-        }
-        .tool h3 { margin-top: 0; font-size: 1.1em; color: #fff; }
-        select, input[type="number"] {
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px solid #333;
-            margin: 4px 0;
-            width: 100%;
-            background: #505050;
-            color: #fff;
-        }
-        button.convert-btn {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            background: #007bff;
-            color: #fff;
-            cursor: pointer;
-        }
-        .bear {
-            width: 60px;
-            height: 60px;
-            animation: bounce 1s infinite alternate;
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>🐻 Robot Dépanneur Christophe</title>
+<style>
+html, body { margin:0; height:100%; font-family:'Segoe UI', Tahoma, sans-serif; }
+body { background:#808080; display:flex; justify-content:center; align-items:flex-start; padding:20px; transition: background 0.3s; }
+.chat-container { display:flex; flex-direction:column; height:90%; width:100%; max-width:700px; background:#fff; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition: background 0.3s; }
+h1 { text-align:center; font-family:'Smalley', sans-serif; font-size:1.8em; margin:15px 0; color:#333; display:flex; justify-content:center; align-items:center; gap:10px; }
+#bear { font-size:1.5em; display:inline-block; animation: nod 4s infinite; }
+@keyframes nod { 0%,50%,100% { transform:rotate(0deg); } 25% { transform:rotate(5deg); } 75% { transform:rotate(-5deg); } }
+
+#chatbox { flex:1; padding:15px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; background:#b2f2bb; border-top:1px solid #ccc; border-bottom:1px solid #ccc; transition: background 0.3s; }
+.bubble { padding:10px 15px; border-radius:20px; max-width:75%; word-wrap:break-word; opacity:0; transform:translateY(10px); animation: fadeIn 0.3s forwards; }
+@keyframes fadeIn { to { opacity:1; transform:translateY(0);} }
+.user { align-self:flex-end; background:#007bff; color:#fff; }
+.bot { align-self:flex-start; background:#e0f8e0; color:#333; }
+
+.input-area { display:flex; gap:8px; padding:10px; }
+.input-area input { flex:1; padding:12px; border-radius:25px; border:1px solid #ccc; outline:none; font-size:1em; }
+.input-area button { padding:12px 20px; border:none; border-radius:25px; background:#007bff; color:#fff; cursor:pointer; }
+
+.tools { display:flex; flex-wrap:wrap; gap:15px; padding:15px; }
+.tool { flex:1; min-width:230px; background:#fff; border-radius:12px; padding:12px; box-shadow:0 3px 6px rgba(0,0,0,0.1); transition: background 0.3s; }
+.tool h3 { margin-top:0; font-size:1.1em; }
+input[type="number"], select { padding:6px; border-radius:6px; border:1px solid #ccc; margin:4px 0; width:100%; }
+#result { margin-top:8px; font-weight:bold; }
+.typing { font-style:italic; color:#555; }
+
+.dark-mode { background:#2c2c2c; color:#f0f0f0; }
+.dark-mode .chat-container { background:#3a3a3a; }
+.dark-mode #chatbox { background:#505050; }
+.dark-mode .user { background:#1e90ff; }
+.dark-mode .bot { background:#6b8e23; }
+.dark-mode .tool { background:#4a4a4a; color:#f0f0f0; }
+</style>
 </head>
 <body>
-    <div class="chat-container">
-        <h1>Robot Dépanneur Christophe <img src="https://i.postimg.cc/FzDkFvQ7/bear.gif" alt="🐻" class="bear"></h1>
-        <div id="chatbox"></div>
-
-        <div class="input-area">
-            <input type="text" id="message" placeholder="Tape ton message..." />
-            <button onclick="sendMessage()">Envoyer</button>
-        </div>
-
-        <div class="tools">
-            <div class="tool">
-                <h3>⚖️ Convertisseur unités</h3>
-                <input type="number" id="value" placeholder="Valeur">
-                <select id="unit">
-                    <option value="m_to_km">m → km</option>
-                    <option value="km_to_m">km → m</option>
-                    <option value="c_to_f">°C → °F</option>
-                    <option value="f_to_c">°F → °C</option>
-                    <option value="kg_to_lb">kg → lb</option>
-                    <option value="lb_to_kg">lb → kg</option>
-                </select>
-                <button class="convert-btn" onclick="convertUnit()">Convertir</button>
-                <p id="result"></p>
-            </div>
+<div class="chat-container">
+    <h1><span id="bear">ʕ•ᴥ•ʔ</span> Robot Dépanneur Christophe</h1>
+    <div id="chatbox"></div>
+    <div class="input-area">
+        <input type="text" id="message" placeholder="Tape ton message..." />
+        <button onclick="sendMessage()">Envoyer</button>
+        <button onclick="toggleDarkMode()">🌙 Mode sombre</button>
+    </div>
+    <div class="tools">
+        <div class="tool">
+            <h3>⚖️ Convertisseur unités & électricité</h3>
+            <input type="number" id="value" placeholder="Valeur">
+            <select id="unit">
+                <option value="m_to_km">m → km</option>
+                <option value="km_to_m">km → m</option>
+                <option value="c_to_f">°C → °F</option>
+                <option value="f_to_c">°F → °C</option>
+                <option value="kg_to_lb">kg → lb</option>
+                <option value="lb_to_kg">lb → kg</option>
+                <option value="ohm_voltage">Loi d'Ohm : V=R*I</option>
+                <option value="ohm_current">Loi d'Ohm : I=V/R</option>
+                <option value="ohm_resistance">Loi d'Ohm : R=V/I</option>
+                <option value="resistor_code">Code couleur résistance</option>
+            </select>
+            <button onclick="convertUnit()">Convertir</button>
+            <p id="result"></p>
         </div>
     </div>
+</div>
 
-    <script>
-        const apiUrl = "https://depanneur-api.onrender.com";
+<script>
+const apiUrl="/chat";
 
-        async function sendMessage() {
-            let msgInput = document.getElementById('message');
-            let msg = msgInput.value.trim();
-            if(msg === '') return;
+// Chat
+async function sendMessage(){
+    let msgInput=document.getElementById('message');
+    let msg=msgInput.value.trim();
+    if(msg==='') return;
 
-            appendBubble(msg, 'user');
-            msgInput.value = '';
+    appendBubble(msg,'user');
+    msgInput.value='';
 
-            try {
-                let response = await fetch(apiUrl + "/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: msg })
-                });
-                let data = await response.json();
-                appendBubble(data.answer, 'bot');
-            } catch(e) {
-                appendBubble("⚠️ Erreur serveur.", 'bot');
-            }
-        }
+    let typingBubble=appendBubble("…",'bot',true);
 
-        function appendBubble(text, type) {
-            let chatbox = document.getElementById('chatbox');
-            let p = document.createElement('div');
-            p.className = `bubble ${type}`;
-            p.innerHTML = text;
-            chatbox.appendChild(p);
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-
-        document.getElementById('message').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') sendMessage();
+    try{
+        let response=await fetch(apiUrl,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({message:msg})
         });
+        let data=await response.json();
+        typingBubble.remove();
+        appendBubble(data.answer,'bot');
+    } catch(e){
+        typingBubble.remove();
+        appendBubble("⚠️ Erreur serveur",'bot');
+    }
+}
 
-        function convertUnit() {
-            let val = parseFloat(document.getElementById("value").value);
-            let unit = document.getElementById("unit").value;
-            if(isNaN(val)) { document.getElementById("result").innerText = "Entrer une valeur"; return; }
+function appendBubble(text,type,isTyping=false){
+    let chatbox=document.getElementById('chatbox');
+    let div=document.createElement('div');
+    div.className='bubble '+type + (isTyping ? " typing" : "");
+    div.innerText=text;
+    chatbox.appendChild(div);
+    chatbox.scrollTop=chatbox.scrollHeight;
+    return div;
+}
 
-            let res;
-            switch(unit) {
-                case "m_to_km": res = val/1000 + " km"; break;
-                case "km_to_m": res = val*1000 + " m"; break;
-                case "c_to_f": res = (val*9/5+32).toFixed(2) + " °F"; break;
-                case "f_to_c": res = ((val-32)*5/9).toFixed(2) + " °C"; break;
-                case "kg_to_lb": res = (val*2.20462).toFixed(2) + " lb"; break;
-                case "lb_to_kg": res = (val/2.20462).toFixed(2) + " kg"; break;
-            }
-            document.getElementById("result").innerText = "Résultat : " + res;
-        }
-    </script>
+// Convertisseur et électricité
+function convertUnit(){
+    let val=parseFloat(document.getElementById("value").value);
+    let unit=document.getElementById("unit").value;
+    let res;
+    if(isNaN(val) && unit.indexOf("ohm")===-1 && unit!=="resistor_code"){ document.getElementById("result").innerText="Entrer une valeur"; return; }
+
+    switch(unit){
+        case "m_to_km": res=val/1000+" km"; break;
+        case "km_to_m": res=val*1000+" m"; break;
+        case "c_to_f": res=(val*9/5+32).toFixed(2)+" °F"; break;
+        case "f_to_c": res=((val-32)*5/9).toFixed(2)+" °C"; break;
+        case "kg_to_lb": res=(val*2.20462).toFixed(2)+" lb"; break;
+        case "lb_to_kg": res=(val/2.20462).toFixed(2)+" kg"; break;
+        case "ohm_voltage": { let R=prompt("Résistance R (Ω) ?"); let I=prompt("Courant I (A) ?"); res="V = "+(parseFloat(R)*parseFloat(I)).toFixed(2)+" V"; } break;
+        case "ohm_current": { let V=prompt("Tension V (V) ?"); let R=prompt("Résistance R (Ω) ?"); res="I = "+(parseFloat(V)/parseFloat(R)).toFixed(2)+" A"; } break;
+        case "ohm_resistance": { let V=prompt("Tension V (V) ?"); let I=prompt("Courant I (A) ?"); res="R = "+(parseFloat(V)/parseFloat(I)).toFixed(2)+" Ω"; } break;
+        case "resistor_code": { 
+            let colors=["noir","marron","rouge","orange","jaune","vert","bleu","violet","gris","blanc"];
+            let bands = prompt("Couleurs séparées par des virgules (ex: rouge, violet, jaune) ?").split(",");
+            if(bands.length<3){ res="Erreur : minimum 3 bandes"; break; }
+            let val1=colors.indexOf(bands[0].trim().toLowerCase());
+            let val2=colors.indexOf(bands[1].trim().toLowerCase());
+            let multiplier=colors.indexOf(bands[2].trim().toLowerCase());
+            if(val1<0||val2<0||multiplier<0){ res="Couleur invalide"; break; }
+            res="Valeur : "+((val1*10+val2)*Math.pow(10,multiplier))+" Ω";
+        } break;
+    }
+    document.getElementById("result").innerText="Résultat : "+res;
+}
+
+// Mode sombre
+function toggleDarkMode(){
+    document.body.classList.toggle('dark-mode');
+}
+
+document.getElementById('message').addEventListener('keypress',function(e){ if(e.key==='Enter') sendMessage(); });
+</script>
 </body>
 </html>
