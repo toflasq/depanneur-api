@@ -4,56 +4,115 @@
     <title>Chat Dépanneur</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #e5e5e5;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
         }
         #chatbox {
-            border: 1px solid #ccc;
-            background: #fff;
-            height: 400px;
+            flex: 1;
+            padding: 15px;
             overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .bubble {
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+        .user {
+            align-self: flex-end;
+            background: #007bff;
+            color: #fff;
+        }
+        .bot {
+            align-self: flex-start;
+            background: #f1f0f0;
+            color: #333;
+        }
+        .input-area {
+            display: flex;
             padding: 10px;
-            margin-bottom: 10px;
+            gap: 5px;
         }
-        .msg-user {
-            text-align: right;
-            color: blue;
-        }
-        .msg-bot {
-            text-align: left;
-            color: green;
-        }
-        input, select {
-            width: 70%;
+        .input-area input[type="text"], .input-area input[type="number"] {
+            flex: 1;
             padding: 8px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
         }
-        button {
+        .input-area button {
             padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .search-area {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            gap: 5px;
+            border-top: 1px solid #ccc;
+        }
+        .search-area input, .search-area button {
+            border-radius: 20px;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        .search-area button {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <h1>Chat Dépanneur</h1>
-    <div id="chatbox"></div>
+    <div class="chat-container">
+        <h1>Chat Dépanneur</h1>
+        <div id="chatbox"></div>
 
-    <!-- Chat normal -->
-    <input type="text" id="message" placeholder="Tape ton message..." />
-    <button onclick="sendMessage()">Envoyer</button>
+        <div class="input-area">
+            <input type="text" id="message" placeholder="Tape ton message..." />
+            <button onclick="sendMessage()">Envoyer</button>
+        </div>
 
-    <br><br>
+        <div class="search-area">
+            <input type="text" id="categorie" placeholder="Catégorie..." />
+            <button onclick="searchCategorie()">Chercher Catégorie</button>
 
-    <!-- Section Data.json -->
-    <h3>Rechercher dans la base de données</h3>
-    <input type="text" id="categorie" placeholder="Catégorie..." />
-    <button onclick="searchCategorie()">Chercher Catégorie</button>
+            <input type="text" id="nom" placeholder="Nom..." />
+            <button onclick="searchNom()">Chercher Nom</button>
 
-    <input type="text" id="nom" placeholder="Nom..." />
-    <button onclick="searchNom()">Chercher Nom</button>
-
-    <input type="number" id="id" placeholder="ID..." />
-    <button onclick="searchId()">Chercher ID</button>
+            <input type="number" id="id" placeholder="ID..." />
+            <button onclick="searchId()">Chercher ID</button>
+        </div>
+    </div>
 
     <script>
         const apiUrl = "https://depanneur-api.onrender.com";
@@ -62,15 +121,22 @@
             let msg = document.getElementById('message').value;
             if(msg === '') return;
 
-            let chatbox = document.getElementById('chatbox');
-            chatbox.innerHTML += `<p class="msg-user"><b>Moi :</b> ${msg}</p>`;
+            appendBubble(msg, 'user');
+            document.getElementById('message').value = '';
 
             let response = await fetch(`${apiUrl}/chat?message=${encodeURIComponent(msg)}`);
             let data = await response.json();
 
-            chatbox.innerHTML += `<p class="msg-bot"><b>Bot :</b> ${data.reply}</p>`;
+            appendBubble(data.reply, 'bot');
+        }
+
+        function appendBubble(text, type) {
+            let chatbox = document.getElementById('chatbox');
+            let p = document.createElement('div');
+            p.className = `bubble ${type}`;
+            p.innerHTML = text;
+            chatbox.appendChild(p);
             chatbox.scrollTop = chatbox.scrollHeight;
-            document.getElementById('message').value = '';
         }
 
         async function searchCategorie() {
@@ -78,7 +144,7 @@
             if (!value) return;
             let res = await fetch(`${apiUrl}/items/search?categorie=${encodeURIComponent(value)}`);
             let data = await res.json();
-            showData("Résultats catégorie", data);
+            appendBubble("Résultats catégorie : " + JSON.stringify(data), 'bot');
         }
 
         async function searchNom() {
@@ -86,7 +152,7 @@
             if (!value) return;
             let res = await fetch(`${apiUrl}/items/name?nom=${encodeURIComponent(value)}`);
             let data = await res.json();
-            showData("Résultats nom", data);
+            appendBubble("Résultats nom : " + JSON.stringify(data), 'bot');
         }
 
         async function searchId() {
@@ -94,13 +160,7 @@
             if (!value) return;
             let res = await fetch(`${apiUrl}/items/id?id=${encodeURIComponent(value)}`);
             let data = await res.json();
-            showData("Résultats ID", data);
-        }
-
-        function showData(title, data) {
-            let chatbox = document.getElementById('chatbox');
-            chatbox.innerHTML += `<p class="msg-bot"><b>${title} :</b> ${JSON.stringify(data)}</p>`;
-            chatbox.scrollTop = chatbox.scrollHeight;
+            appendBubble("Résultats ID : " + JSON.stringify(data), 'bot');
         }
     </script>
 </body>
