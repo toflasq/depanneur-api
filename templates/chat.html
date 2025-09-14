@@ -5,60 +5,45 @@
 <title>🐻 Robot Dépanneur Christophe</title>
 <style>
 html, body { margin:0; height:100%; font-family:'Segoe UI', Tahoma, sans-serif; }
-body.light { background:#40E0D0; }
-body.dark { background:#505050; }
+body { background:#40E0D0; display:flex; justify-content:center; align-items:flex-start; padding:20px; }
+.chat-container { display:flex; flex-direction:column; height:90%; width:100%; max-width:700px; background:#fff; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.2); }
+h1 { text-align:center; font-family:'Smalley', sans-serif; font-size:1.8em; margin:15px 0; color:#333; display:flex; justify-content:center; align-items:center; gap:10px; }
+#bear { font-size:1.5em; display:inline-block; animation: blink 2s infinite, nod 4s infinite; }
+@keyframes blink { 0%,90%,100% { opacity:1; } 45%,55% { opacity:0; } }
+@keyframes nod { 0%,50%,100% { transform:rotate(0deg); } 25% { transform:rotate(5deg); } 75% { transform:rotate(-5deg); } }
 
-.chat-container { display:flex; flex-direction:column; height:100%; max-width:700px; margin:0 auto; padding:10px; box-sizing:border-box; }
-h1 { text-align:center; font-family:'Smalley', sans-serif; font-size:1.8em; margin-bottom:10px; color:#fff; }
-#themeToggle { position:absolute; top:10px; right:10px; padding:8px 12px; border:none; border-radius:12px; background:#007bff; color:#fff; cursor:pointer; font-size:0.9em; }
-
-#chatbox { flex:1; padding:15px; border-radius:10px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; transition: background 0.3s; }
-body.light #chatbox { background:#b2f2bb; }
-body.dark  #chatbox { background:#303030; }
-
-.bubble { padding:10px 15px; border-radius:20px; max-width:75%; word-wrap:break-word; opacity:0; transform:translateY(10px); animation: fadeIn 0.3s forwards; transition: background 0.3s, color 0.3s; }
-@keyframes fadeIn { to {opacity:1; transform:translateY(0);} }
-
+#chatbox { flex:1; padding:15px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; background:#b2f2bb; border-top:1px solid #ccc; border-bottom:1px solid #ccc; }
+.bubble { padding:10px 15px; border-radius:20px; max-width:75%; word-wrap:break-word; opacity:0; transform:translateY(10px); animation: fadeIn 0.3s forwards; }
+@keyframes fadeIn { to { opacity:1; transform:translateY(0);} }
 .user { align-self:flex-end; background:#007bff; color:#fff; }
-body.dark .user { background:#3399ff; color:#fff; }
-.bot { align-self:flex-start; background:#f1f0f0; color:#333; }
-body.dark .bot { background:#606060; color:#eee; }
+.bot { align-self:flex-start; background:#e0f8e0; color:#333; }
 
-.input-area { display:flex; gap:8px; margin-top:10px; }
-.input-area input { flex:1; padding:12px; border-radius:25px; border:none; outline:none; transition: background 0.3s, color 0.3s; }
-body.light .input-area input { background:#fff; color:#000; }
-body.dark  .input-area input { background:#404040; color:#fff; }
+.input-area { display:flex; gap:8px; padding:10px; }
+.input-area input { flex:1; padding:12px; border-radius:25px; border:1px solid #ccc; outline:none; font-size:1em; }
 .input-area button { padding:12px 20px; border:none; border-radius:25px; background:#007bff; color:#fff; cursor:pointer; }
 
 .tools { display:flex; flex-wrap:wrap; gap:15px; padding:15px; }
-.tool { flex:1; min-width:230px; background:#fff; border-radius:12px; padding:12px; box-shadow:0 3px 6px rgba(0,0,0,0.1); transition: background 0.3s, color 0.3s; }
-body.dark .tool { background:#404040; color:#fff; }
+.tool { flex:1; min-width:230px; background:#fff; border-radius:12px; padding:12px; box-shadow:0 3px 6px rgba(0,0,0,0.1); }
 .tool h3 { margin-top:0; font-size:1.1em; }
 textarea { width:100%; height:120px; border-radius:8px; padding:8px; border:1px solid #ccc; font-size:0.95em; resize:vertical; }
 input[type="number"], select { padding:6px; border-radius:6px; border:1px solid #ccc; margin:4px 0; width:100%; }
 #result { margin-top:8px; font-weight:bold; }
 .typing { font-style:italic; color:#555; }
-body.dark .typing { color:#ccc; }
 </style>
 </head>
-<body class="light">
-<button id="themeToggle">🌙 Sombre</button>
-
+<body>
 <div class="chat-container">
-    <h1>🐻 Robot Dépanneur Christophe</h1>
+    <h1><span id="bear">ʕ•ᴥ•ʔ</span> Robot Dépanneur Christophe</h1>
     <div id="chatbox"></div>
     <div class="input-area">
         <input type="text" id="message" placeholder="Tape ton message..." />
         <button onclick="sendMessage()">Envoyer</button>
     </div>
     <div class="tools">
-        <!-- Bloc-notes -->
         <div class="tool">
             <h3>📝 Bloc-notes</h3>
             <textarea id="notes" placeholder="Écris tes notes ici..."></textarea>
         </div>
-
-        <!-- Convertisseur unités -->
         <div class="tool">
             <h3>⚖️ Convertisseur unités</h3>
             <input type="number" id="value" placeholder="Valeur">
@@ -79,17 +64,6 @@ body.dark .typing { color:#ccc; }
 <script>
 const apiUrl="/chat";
 
-// Thème
-const themeBtn=document.getElementById('themeToggle');
-themeBtn.addEventListener('click', ()=>{
-    const body=document.body;
-    if(body.classList.contains('light')){
-        body.classList.replace('light','dark'); themeBtn.innerText="☀️ Clair";
-    } else {
-        body.classList.replace('dark','light'); themeBtn.innerText="🌙 Sombre";
-    }
-});
-
 // Chat
 async function sendMessage(){
     let msgInput=document.getElementById('message');
@@ -99,8 +73,7 @@ async function sendMessage(){
     appendBubble(msg,'user');
     msgInput.value='';
 
-    // Affiche "typing..."
-    let typingBubble=appendBubble("…", 'bot', true);
+    let typingBubble=appendBubble("…",'bot',true);
 
     try{
         let response=await fetch(apiUrl,{
@@ -144,7 +117,6 @@ function convertUnit(){
     document.getElementById("result").innerText="Résultat : "+res;
 }
 
-// Entrée = envoyer
 document.getElementById('message').addEventListener('keypress',function(e){ if(e.key==='Enter') sendMessage(); });
 </script>
 </body>
