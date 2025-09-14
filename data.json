@@ -250,7 +250,7 @@
       "time": { "basic": "5–10 min" },
       "cost_ranges_eur": { "pro": "60–180 selon panne; magnétron 120–220" }
     }
-    },
+  },
   {
     "category": "Informatique",
     "device": "PC de bureau",
@@ -668,7 +668,7 @@
       "time": { "basic": "5–10 min", "intermediate": "20–30 min" },
       "cost_ranges_eur": { "parts": "1–10", "pro": "— (remplacer la télécommande souvent)" }
     }
-  },
+  }
   
 ]
 
