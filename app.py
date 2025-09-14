@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from openai import OpenAI
 import os
@@ -7,62 +7,60 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-# 🔑 Charge ta clé API OpenAI depuis les variables d'environnement Render
+# 🔑 Clé API OpenAI (configurée dans Render → Environment Variables)
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# 📂 Charger ton JSON
+# 📂 Charger la base JSON
 with open("data.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
+    knowledge_base = json.load(f)
 
-# ✅ Route racine
+# 🔍 Recherche simple dans la base
+def search_in_kb(user_message):
+    user_message = user_message.lower()
+    for item in knowledge_base:
+        if item["device"].lower() in user_message and item["scenario"].lower() in user_message:
+            return item
+    return None
+
+# ✅ Page d’accueil
 @app.route("/")
 def index():
-    return "Robot Christophe Actif"
+    return "API active. Allez sur /chatpage pour tester l'interface."
 
-# ✅ Route pour interface chat web
+# ✅ Page de chat web
 @app.route("/chatpage")
 def chatpage():
     return render_template("chat.html")
 
-# ✅ Route Chat (fusion Data.json + GPT)
-@app.route("/chat")
+# ✅ Endpoint API
+@app.route("/chat", methods=["POST"])
 def chat():
-    user_msg = request.args.get("message")
-    if not user_msg:
-        return jsonify({"reply": "Envoyez un message valide."})
+    user_message = request.json.get("message", "")
+    if not user_message:
+        return jsonify({"answer": "Envoie une question valide."})
 
-    # 🔍 Chercher dans data.json
-    results = []
-    for item in data:
-        if user_msg.lower() in str(item.get("nom", "")).lower():
-            results.append(item)
-        elif user_msg.lower() in str(item.get("categorie", "")).lower():
-            results.append(item)
-        elif user_msg.isdigit() and int(user_msg) == item.get("id"):
-            results.append(item)
+    kb_entry = search_in_kb(user_message)
 
-    # Construit le contexte
-    context = f"L'utilisateur a demandé : {user_msg}\n"
-    if results:
-        context += f"Données trouvées dans data.json : {results}\n"
-    else:
-        context += "Aucune donnée directe trouvée dans data.json.\n"
+    messages = [
+        {"role": "system", "content": "Tu es un assistant technique qui aide à diagnostiquer des pannes d’appareils électroménagers en utilisant une base JSON."},
+        {"role": "user", "content": user_message}
+    ]
 
-    # 💬 Appel GPT-4o mini
+    if kb_entry:
+        context = f"Voici des infos issues de la base de données : {json.dumps(kb_entry, ensure_ascii=False)}"
+        messages.append({"role": "system", "content": context})
+
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Tu es Robot Christophe, un assistant qui combine données JSON et intelligence GPT."},
-                {"role": "user", "content": context}
-            ]
+            messages=messages
         )
         reply = response.choices[0].message.content
     except Exception as e:
         reply = f"Erreur GPT: {str(e)}"
 
-    return jsonify({"reply": reply})
-
+    return jsonify({"answer": reply})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
