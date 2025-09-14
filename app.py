@@ -35,32 +35,35 @@ def chatpage():
 # ✅ Endpoint API
 @app.route("/chat", methods=["POST"])
 def chat():
-    user_message = request.json.get("message", "")
-    if not user_message:
-        return jsonify({"answer": "Envoie une question valide."})
-
-    kb_entry = search_in_kb(user_message)
-
-    messages = [
-        {"role": "system", "content": "Tu es un assistant technique qui aide à diagnostiquer des pannes d’appareils électroménagers en utilisant une base JSON."},
-        {"role": "user", "content": user_message}
-    ]
-
-    if kb_entry:
-        context = f"Voici des infos issues de la base de données : {json.dumps(kb_entry, ensure_ascii=False)}"
-        messages.append({"role": "system", "content": context})
-
     try:
+        user_message = request.json.get("message", "")
+        if not user_message:
+            return jsonify({"answer": "Envoie une question valide."})
+
+        # Recherche dans la base
+        kb_entry = search_in_kb(user_message)
+
+        # Construction du prompt pour OpenAI
+        messages = [
+            {"role": "system", "content": "Tu es un assistant technique qui aide à diagnostiquer des pannes d’appareils électroménagers en utilisant une base JSON."},
+            {"role": "user", "content": user_message}
+        ]
+
+        if kb_entry:
+            context = f"Voici des infos issues de la base de données : {json.dumps(kb_entry, ensure_ascii=False)}"
+            messages.append({"role": "system", "content": context})
+
+        # Appel OpenAI
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages
         )
         reply = response.choices[0].message.content
-    except Exception as e:
-        reply = f"Erreur GPT: {str(e)}"
 
-    return jsonify({"answer": reply})
+        return jsonify({"answer": reply})
+
+    except Exception as e:
+        return jsonify({"answer": f"⚠️ Erreur serveur : {str(e)}"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-
