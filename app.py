@@ -25,22 +25,24 @@ def search_in_kb(user_message):
 # ✅ Page d’accueil
 @app.route("/")
 def index():
-    return "API active. Allez sur /chatpage pour tester l'interface."
+    return "API active. Allez sur /chatpage pour tester le chat."
 
 # ✅ Page de chat web
 @app.route("/chatpage")
 def chatpage():
-    return render_template("chat.html")
+    return render_template("chat.html")  # ton chat.html avec le CSS vert pastel / fond bleu
 
 # ✅ Endpoint API
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
-        user_message = request.json.get("message", "")
-        if not user_message:
-            return jsonify({"answer": "Envoie une question valide."})
+        data = request.get_json()
+        if not data or "message" not in data:
+            return jsonify({"answer": "⚠️ Envoie un message valide."})
 
-        # Recherche dans la base
+        user_message = data["message"]
+
+        # Recherche dans la base JSON
         kb_entry = search_in_kb(user_message)
 
         # Construction du prompt pour OpenAI
@@ -50,7 +52,7 @@ def chat():
         ]
 
         if kb_entry:
-            context = f"Voici des infos issues de la base de données : {json.dumps(kb_entry, ensure_ascii=False)}"
+            context = f"Voici des infos issues de la base : {json.dumps(kb_entry, ensure_ascii=False)}"
             messages.append({"role": "system", "content": context})
 
         # Appel OpenAI
@@ -58,12 +60,13 @@ def chat():
             model="gpt-4o-mini",
             messages=messages
         )
-        reply = response.choices[0].message.content
 
+        reply = response.choices[0].message.content
         return jsonify({"answer": reply})
 
     except Exception as e:
         return jsonify({"answer": f"⚠️ Erreur serveur : {str(e)}"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
