@@ -3,30 +3,27 @@
 <head>
     <title>Chat Dépanneur</title>
     <style>
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background: #e5e5e5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
         }
         .chat-container {
-            width: 400px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
         }
         #chatbox {
             flex: 1;
             padding: 15px;
             overflow-y: auto;
-            border-bottom: 1px solid #ccc;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -36,6 +33,12 @@
             border-radius: 20px;
             max-width: 75%;
             word-wrap: break-word;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.3s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
         }
         .user {
             align-self: flex-end;
@@ -51,20 +54,24 @@
             display: flex;
             padding: 10px;
             gap: 5px;
+            border-top: 1px solid #ccc;
         }
-        .input-area input[type="text"], .input-area input[type="number"] {
+        .input-area input, .input-area input[type="number"] {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             border-radius: 20px;
             border: 1px solid #ccc;
+            outline: none;
+            font-size: 1em;
         }
         .input-area button {
-            padding: 8px 15px;
+            padding: 10px 20px;
             border: none;
             border-radius: 20px;
             background: #007bff;
             color: #fff;
             cursor: pointer;
+            font-size: 1em;
         }
         .search-area {
             display: flex;
@@ -73,16 +80,20 @@
             gap: 5px;
             border-top: 1px solid #ccc;
         }
-        .search-area input, .search-area button {
-            border-radius: 20px;
+        .search-area input {
             padding: 8px;
+            border-radius: 20px;
             border: 1px solid #ccc;
+            font-size: 0.95em;
         }
         .search-area button {
+            padding: 8px;
+            border-radius: 20px;
             background: #28a745;
             color: #fff;
             border: none;
             cursor: pointer;
+            font-size: 0.95em;
         }
         h1 {
             text-align: center;
@@ -118,16 +129,20 @@
         const apiUrl = "https://depanneur-api.onrender.com";
 
         async function sendMessage() {
-            let msg = document.getElementById('message').value;
+            let msgInput = document.getElementById('message');
+            let msg = msgInput.value.trim();
             if(msg === '') return;
 
             appendBubble(msg, 'user');
-            document.getElementById('message').value = '';
+            msgInput.value = '';
 
-            let response = await fetch(`${apiUrl}/chat?message=${encodeURIComponent(msg)}`);
-            let data = await response.json();
-
-            appendBubble(data.reply, 'bot');
+            try {
+                let response = await fetch(`${apiUrl}/chat?message=${encodeURIComponent(msg)}`);
+                let data = await response.json();
+                appendBubble(data.reply, 'bot');
+            } catch(e) {
+                appendBubble("Erreur serveur.", 'bot');
+            }
         }
 
         function appendBubble(text, type) {
@@ -140,7 +155,7 @@
         }
 
         async function searchCategorie() {
-            let value = document.getElementById('categorie').value;
+            let value = document.getElementById('categorie').value.trim();
             if (!value) return;
             let res = await fetch(`${apiUrl}/items/search?categorie=${encodeURIComponent(value)}`);
             let data = await res.json();
@@ -148,7 +163,7 @@
         }
 
         async function searchNom() {
-            let value = document.getElementById('nom').value;
+            let value = document.getElementById('nom').value.trim();
             if (!value) return;
             let res = await fetch(`${apiUrl}/items/name?nom=${encodeURIComponent(value)}`);
             let data = await res.json();
@@ -156,12 +171,19 @@
         }
 
         async function searchId() {
-            let value = document.getElementById('id').value;
+            let value = document.getElementById('id').value.trim();
             if (!value) return;
             let res = await fetch(`${apiUrl}/items/id?id=${encodeURIComponent(value)}`);
             let data = await res.json();
             appendBubble("Résultats ID : " + JSON.stringify(data), 'bot');
         }
+
+        // Envoi message en appuyant sur Entrée
+        document.getElementById('message').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
